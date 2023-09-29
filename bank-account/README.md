@@ -2,7 +2,7 @@
 Write a class named Account that implements the following public interface:
 
 ```csharp
-public interface AccountService
+public interface IAccountService
 {
     void Deposit(int amount) 
     void Withdraw(int amount) 

@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33801.468
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAccountKata.Console", "BankAccountKata.Console\BankAccountKata.Console.csproj", "{FFC2F5E3-C4E0-4F41-B5CE-F67772FF56AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankAccountKata.Console", "BankAccountKata.Console\BankAccountKata.Console.csproj", "{FFC2F5E3-C4E0-4F41-B5CE-F67772FF56AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAccountKata.Tests", "BankAccountKata.Tests\BankAccountKata.Tests.csproj", "{F5AD594D-BC31-44E0-9B7A-ED084BD36E2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankAccountKata.Tests", "BankAccountKata.Tests\BankAccountKata.Tests.csproj", "{F5AD594D-BC31-44E0-9B7A-ED084BD36E2E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A89A0525-DB3F-4DBA-BCF8-2AB8AC3DB2BE}"
+	ProjectSection(SolutionItems) = preProject
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
