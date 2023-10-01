@@ -1,6 +1,4 @@
-﻿using BankAccountKata.Console;
-
-namespace BankAccountKata.Tests
+﻿namespace BankAccountKata.Tests
 {
     internal class AccountTests
     {
@@ -10,7 +8,8 @@ namespace BankAccountKata.Tests
         [SetUp] 
         public void SetUp() {
             _statementOutput = new StringWriter();
-            _accountService = new AccountService(_statementOutput);
+            var statementPrinter = new StatementPrinter(_statementOutput);
+            _accountService = new AccountService(statementPrinter);
         }
 
         [TearDown] 
