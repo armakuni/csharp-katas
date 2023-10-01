@@ -12,7 +12,7 @@
         public void PrintStatement(SortedList<DateTime, int> transactions)
         {
             static string Format(KeyValuePair<DateTime, int> transaction, int total) => 
-                $"{transaction.Key.ToShortDateString()} || {transaction.Value} || {total}";
+                $"{transaction.Key.ToShortDateString()} || {transaction.Value,-6} || {total}";
 
             var runningTotal = 0;
             var lines = transactions
@@ -21,7 +21,7 @@
                     runningTotal += transaction.Value;
                     return Format(transaction, runningTotal);
                 })
-                .Concat(new[] { "Date      || Amount || Balance" })
+                .Concat(new[] { "Date       || Amount || Balance" })
                 .Reverse();
 
             _writer.Write(string.Join(Environment.NewLine, lines));
