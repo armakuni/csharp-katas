@@ -1,4 +1,4 @@
-﻿namespace BankAccountKata.Tests
+﻿namespace BankAccountKata.Console.Tests
 {
     internal class AccountTests
     {
@@ -22,7 +22,7 @@
         public void WhenIPrintAStatement_ItStartsWithHeaders() {
             _accountService.PrintStatement();
             var actual = _statementOutput.ToString();
-            Assert.That(actual, Does.StartWith("Date      || Amount || Balance"));
+            Assert.That(actual, Does.StartWith("Date       || Amount || Balance"));
         }
 
         [TestCase("10-01-2012", 1000)]
