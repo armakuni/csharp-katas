@@ -33,7 +33,7 @@ N.B. This is similar to the Smalltalk MVC model, but is quite different to e.g. 
 ```mermaid
 sequenceDiagram
 	autonumber
-	participant O as Console
+	Actor O as User
 	participant V as View
 	participant C as Controller
 	participant M as Model
