@@ -14,7 +14,7 @@ namespace TaskList.Console.Tests
         }
 
         [TestMethod]
-        public void WhenPreparingMainTaskList_ThenItSendsAListOfTasksToTheView()
+        public void WhenPreparingMainTaskList_ThenItSendsAListOfIncompleteTasksToTheView()
         {
             // A
             var viewMock = new Mock<ITaskView>();
