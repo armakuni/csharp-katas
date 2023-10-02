@@ -26,3 +26,47 @@ To keep the program cleanly factored, we suggest a design like this:
 Note that this class should not write output itself. That's the job of the View object. (the "Controller")
 1. A set of objects to represent the task list in memory. These should be capable of responding to the actions the controller wants to execute. (the "Model")
 
+N.B. This is similar to the Smalltalk MVC model, but is quite different to e.g. ASP.Net MVC
+
+```mermaid
+sequenceDiagram
+	autonumber
+	participant O as Console
+	participant V as View
+	participant C as Controller
+	participant M as Model
+	
+	loop
+
+		V->>M: Preparing task list
+		M->>V: List of available tasks
+		V->>O: Task list
+		V->>O: Prompt (A)dd (Q)uit
+		opt Quitting
+			O->>C: Q
+			Note right of C: The program ends!
+		end
+		opt Add new task
+			O->>C: A
+			C->>V: Add task mode selected
+			V->>O: Add task display
+			O->>C: Task name
+			C->>M: Create task with name
+		end
+		opt Edit a task
+			O->>C: Task id (e.g. 1)
+			C->>M: Edit task (e.g. 1)
+			M->>V: Current task (e.g. 1)
+			C->>V: Editing task mode selected
+			V->>O: Edit task display
+			alt Change name
+				O->>C: Task name
+				C->>M: Update task name
+			else Complete task
+				O->>C: Complete task
+				C->>M: Mark task as complete
+			end
+		end
+
+	end
+```
