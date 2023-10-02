@@ -28,6 +28,45 @@ Note that this class should not write output itself. That's the job of the View 
 
 N.B. This is similar to the Smalltalk MVC model, but is quite different to e.g. ASP.Net MVC
 
+### Show the task list, then quit
+
+```mermaid
+sequenceDiagram
+	autonumber
+	participant O as Console
+	participant V as View
+	participant C as Controller
+	participant M as Model
+	
+		V->>M: Preparing task list
+		M->>V: List of available tasks
+		V->>O: Task list
+		V->>O: Prompt (A)dd (Q)uit
+		O->>C: Q
+		Note right of C: The program ends!
+		
+```
+
+### Add a task
+```mermaid
+sequenceDiagram
+	autonumber
+	participant O as Console
+	participant V as View
+	participant C as Controller
+	participant M as Model
+	
+	loop
+	
+			V->>O: Prompt (A)dd (Q)uit
+			O->>C: A
+			C->>V: Add task mode selected
+			V->>O: Add task display
+			O->>C: Task name
+			C->>M: Create task with name
+	end
+```
+### Edit a task
 ```mermaid
 sequenceDiagram
 	autonumber
@@ -38,22 +77,7 @@ sequenceDiagram
 	
 	loop
 
-		V->>M: Preparing task list
-		M->>V: List of available tasks
-		V->>O: Task list
-		V->>O: Prompt (A)dd (Q)uit
-		opt Quitting
-			O->>C: Q
-			Note right of C: The program ends!
-		end
-		opt Add new task
-			O->>C: A
-			C->>V: Add task mode selected
-			V->>O: Add task display
-			O->>C: Task name
-			C->>M: Create task with name
-		end
-		opt Edit a task
+		
 			O->>C: Task id (e.g. 1)
 			C->>M: Edit task (e.g. 1)
 			M->>V: Current task (e.g. 1)
@@ -66,7 +90,6 @@ sequenceDiagram
 				O->>C: Complete task
 				C->>M: Mark task as complete
 			end
-		end
-
+		
 	end
 ```
