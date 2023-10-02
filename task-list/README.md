@@ -28,7 +28,10 @@ Note that this class should not write output itself. That's the job of the View 
 
 N.B. This is similar to the Smalltalk MVC model, but is quite different to e.g. ASP.Net MVC
 
-### Show the task list, then quit
+### Journeys
+Here's a suggested list of user journeys split across different objects
+
+#### Show the task list, then quit
 
 ```mermaid
 sequenceDiagram
@@ -47,7 +50,7 @@ sequenceDiagram
 		
 ```
 
-### Add a task journey
+#### Add a task
 ```mermaid
 sequenceDiagram
 	autonumber
@@ -66,7 +69,7 @@ sequenceDiagram
 			C->>M: Create task with name
 	
 ```
-### Edit a task journey
+#### Edit a task journey
 ```mermaid
 sequenceDiagram
 	autonumber
