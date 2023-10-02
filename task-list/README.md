@@ -41,43 +41,43 @@ sequenceDiagram
 		V->>M: Preparing task list
 		M->>V: List of available tasks
 		V->>O: Task list
-		V->>O: Prompt (A)dd (Q)uit
+		V->>O: Prompt (A)dd (Q)uit or task id
 		O->>C: Q
 		Note right of C: The program ends!
 		
 ```
 
-### Add a task
+### Add a task journey
 ```mermaid
 sequenceDiagram
 	autonumber
-	participant O as Console
+	Actor O as User
 	participant V as View
 	participant C as Controller
 	participant M as Model
-	
-	loop
-	
-			V->>O: Prompt (A)dd (Q)uit
+
+		V->>O: Task list
+		V->>O: Prompt (A)dd (Q)uit or task id
+
 			O->>C: A
 			C->>V: Add task mode selected
 			V->>O: Add task display
 			O->>C: Task name
 			C->>M: Create task with name
-	end
+	
 ```
-### Edit a task
+### Edit a task journey
 ```mermaid
 sequenceDiagram
 	autonumber
-	participant O as Console
+	Actor O as User
 	participant V as View
 	participant C as Controller
 	participant M as Model
-	
-	loop
 
-		
+		V->>O: Task list
+		V->>O: Prompt (A)dd (Q)uit or task id
+
 			O->>C: Task id (e.g. 1)
 			C->>M: Edit task (e.g. 1)
 			M->>V: Current task (e.g. 1)
@@ -91,5 +91,4 @@ sequenceDiagram
 				C->>M: Mark task as complete
 			end
 		
-	end
 ```
