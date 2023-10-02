@@ -29,7 +29,7 @@ Note that this class should not write output itself. That's the job of the View 
 N.B. This is similar to the Smalltalk MVC model, but is quite different to e.g. ASP.Net MVC
 
 ### Journeys
-Here's a suggested list of user journeys split across different objects
+Here's a suggested list of user journeys split across different objects. It might help to test-drive these one at a time.
 
 #### Show the task list, then quit
 
