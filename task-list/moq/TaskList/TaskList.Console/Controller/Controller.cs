@@ -8,8 +8,19 @@
 
         public void HandleUserInput(TextReader input)
         {
-            input.ReadLine();
-            _terminator.Exit();
+            var data = input.ReadLine()?.ToLowerInvariant();
+            if (data == "q")
+            {
+                _terminator.Exit();
+            }
+            else if (data == "a")
+            {
+                // add a task
+            }
+            else
+            {
+                // handle task ids etc.
+            }
         }
     }
 }
