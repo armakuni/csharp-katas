@@ -23,7 +23,7 @@ namespace TaskList.Console.Tests
         public void WhenItRenders_ItShouldNotifyTheModel()
         {
             // A
-            _sut!.Render();
+            _sut!.AtMainMenu();
             // A
             _modelMock!.Verify(model => model.PreparingTaskList(_sut));
         }
@@ -39,7 +39,7 @@ namespace TaskList.Console.Tests
                 new ToDo(3, "Pour a whisky")
             });
             // A
-            _sut!.Render();
+            _sut!.AtMainMenu();
             // A
             _outputMock!.Verify(output => output.WriteLine("Tasks:"));
             _outputMock!.Verify(output => output.WriteLine("1. Wash the dishes"));
@@ -51,7 +51,7 @@ namespace TaskList.Console.Tests
         public void GivenThereAreNoIncompleteTasks_WhenItRenders_ThenItRendersAnEmptyList()
         {
             // A
-            _sut!.Render();
+            _sut!.AtMainMenu();
             // A
             _outputMock!.Verify(output => output.WriteLine("You have no tasks"));
         }
@@ -60,7 +60,7 @@ namespace TaskList.Console.Tests
         public void WhenItRenders_ThenItRendersTheCommandPrompt()
         {
             // A
-            _sut!.Render();
+            _sut!.AtMainMenu();
             // A
             _outputMock!.Verify(output => output.Write("(A)dd a task (Q)uit (or enter a task id): "));
         }
@@ -71,7 +71,7 @@ namespace TaskList.Console.Tests
             // A
             _sut!.ErrorOccurred("The id you entered doesn't belong to an active task");
             // A
-            _sut!.Render();
+            _sut!.AtMainMenu();
             // A
             _outputMock!.Verify(output => output.WriteLine("ERROR: The id you entered doesn't belong to an active task"));
         }
@@ -82,13 +82,22 @@ namespace TaskList.Console.Tests
             // A
             _sut!.ErrorOccurred("BOOM!");
             // A
-            _sut!.Render();
-            _sut!.Render();
+            _sut!.AtMainMenu();
+            _sut!.AtMainMenu();
             // A
             _outputMock!.Verify(
                 output => output.WriteLine("ERROR: BOOM!"),
                 Times.Exactly(1)
             );
+        }
+
+        [TestMethod]
+        public void WhenAddTaskModeIsSelected_ThenItRendersTheAddATaskPrompt()
+        {
+            // A
+            _sut!.AddingTask();
+            // A
+            _outputMock!.Verify(output => output.WriteLine("Enter a task name (or blank to cancel): "));
         }
 
     }

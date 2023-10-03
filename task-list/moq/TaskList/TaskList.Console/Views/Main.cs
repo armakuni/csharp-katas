@@ -2,7 +2,7 @@
 
 namespace TaskList.Console.Views
 {
-    public class Main : ITaskView
+    public class Main : ITaskView, IViewSelector
     {
         private readonly IModel _model;
         private readonly TextWriter _output;
@@ -20,7 +20,7 @@ namespace TaskList.Console.Views
             _incompleteTasks = toDos;
         }
 
-        public void Render()
+        public void AtMainMenu()
         {
             _model.PreparingTaskList(this);
             if (_incompleteTasks.Any())
@@ -61,5 +61,9 @@ namespace TaskList.Console.Views
 
         public void ErrorOccurred(string errorMessage) =>
             _latestError = errorMessage;
+
+        public void AddingTask() =>
+            _output.WriteLine("Enter a task name (or blank to cancel): ");
+
     }
 }
