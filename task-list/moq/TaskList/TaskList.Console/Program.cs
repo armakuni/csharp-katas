@@ -8,6 +8,7 @@ var mainView = new Main(model, Console.Out);
 var controller = new Controller(new Terminator(), mainView, model);
 
 mainView.AtMainMenu();
+// main loop
 do
 {
     // the controller will exit the program for us when the user chooses to Quit
