@@ -4,6 +4,21 @@ In this kata we practise separating input, output and modelling concerns.
 
 The goal is to produce a task list program which can be driven from the command line. There is no need to persist the task list to a database or file (though you could try that later).
 
+## How this kata works
+On the `main` branch, the README specifies the kata requirements. You can also see a suggested design.
+
+There's also a starting point for the first user journey - tests and implementation.
+
+You can try to do the second user journey starting from this point. To see how it progresses, checkout the following branches:
+
+```
+main (main menu)
+  |
+  \_ task-list/moq/step-2 (add a task)
+       |
+       \__ task-list/moq/step-3 (edit a task)
+```
+
 ## Requirements
 
 1. Show the task list on the screen.
