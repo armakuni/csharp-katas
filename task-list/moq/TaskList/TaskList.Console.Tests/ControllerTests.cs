@@ -72,7 +72,7 @@ namespace TaskList.Console.Tests
             var input = new StringReader(userInput.ToString());
             _sut!.HandleUserInput(input);
             // A
-            _modelMock!.Verify(model => model.NewTaskSpecified("Do the dishes"));
+            _modelMock!.Verify(model => model.SpecifyingNewTask("Do the dishes"));
         }
 
         [TestMethod]

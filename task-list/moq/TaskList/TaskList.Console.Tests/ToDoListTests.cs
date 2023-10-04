@@ -30,7 +30,7 @@ namespace TaskList.Console.Tests
             // A
             var viewMock = new Mock<ITaskView>();
             // A
-            _sut!.NewTaskSpecified("Clean the table");
+            _sut!.SpecifyingNewTask("Clean the table");
             // A
             _sut.PreparingTaskList(viewMock.Object); // trigger sending the incomplete tasks
             viewMock.Verify(view => view.IncompleteTasks(
@@ -47,8 +47,8 @@ namespace TaskList.Console.Tests
             var viewMock = new Mock<ITaskView>();
             
             // A
-            _sut!.NewTaskSpecified("Clean the table");
-            _sut!.NewTaskSpecified("Mop the floor");
+            _sut!.SpecifyingNewTask("Clean the table");
+            _sut!.SpecifyingNewTask("Mop the floor");
             // A
             _sut.PreparingTaskList(viewMock.Object); // trigger sending the incomplete tasks
             viewMock.Verify(view => view.IncompleteTasks(
@@ -72,7 +72,7 @@ namespace TaskList.Console.Tests
         public void GivenTheTaskExists_WhenItIsRequestedForEdit_ThenTheRequestIsAccepted()
         {
             // A
-            _sut!.NewTaskSpecified("Pour a whisky");
+            _sut!.SpecifyingNewTask("Pour a whisky");
             // A
             var actual = _sut!.EditingTask(1);
             // A
@@ -83,7 +83,7 @@ namespace TaskList.Console.Tests
         public void GivenTheTaskIsSelectedForEdit_WhenTheViewIsPreparingEditMode_ThenItSendsTaskDetailsToTheView()
         {
             // A
-            _sut!.NewTaskSpecified("Pour a whisky");
+            _sut!.SpecifyingNewTask("Pour a whisky");
             _sut.EditingTask(1);
             var viewMock = new Mock<ITaskView>();
             // A
@@ -100,7 +100,7 @@ namespace TaskList.Console.Tests
         public void GivenTheTaskIsSelectedForEdit_WhenANewNameIsSupplied_ThenItIsUpdated()
         {
             // A
-            _sut!.NewTaskSpecified("Pour a Irish whiskey");
+            _sut!.SpecifyingNewTask("Pour a Irish whiskey");
             _sut!.EditingTask(1);
             var viewMock = new Mock<ITaskView>();
             // A

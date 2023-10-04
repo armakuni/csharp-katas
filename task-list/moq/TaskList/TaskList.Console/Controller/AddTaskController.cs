@@ -18,7 +18,7 @@ namespace TaskList.Console.Controller
             _viewSelector.AddingTaskMode();
             var maybeName = input.ReadLine()?.Trim();
             if (!string.IsNullOrWhiteSpace(maybeName))
-                _model.NewTaskSpecified(maybeName);
+                _model.SpecifyingNewTask(maybeName);
             _viewSelector.MainMenuMode();
         }
 

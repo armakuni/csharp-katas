@@ -8,7 +8,7 @@ namespace TaskList.Console.Model
         private ToDo? _editingTask;
         private readonly List<ToDo> _incompleteTasks = new();
 
-        public void NewTaskSpecified(string taskName)
+        public void SpecifyingNewTask(string taskName)
         {
             var todo = new ToDo(_counter++, taskName);
             _incompleteTasks.Add(todo);

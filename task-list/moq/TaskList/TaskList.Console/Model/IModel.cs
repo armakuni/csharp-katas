@@ -5,7 +5,7 @@ namespace TaskList.Console.Model
     public interface IModel
     {
         bool EditingTask(int taskId);
-        void NewTaskSpecified(string taskName);
+        void SpecifyingNewTask(string taskName);
         void PreparingTaskList(ITaskView view);
         void PreparingEditMode(ITaskView view);
         void UpdatingTaskName(ToDo toDo);
