@@ -23,7 +23,7 @@ namespace TaskList.Console.Tests
         public void WhenItRenders_ItShouldNotifyTheModel()
         {
             // A
-            _sut!.AtMainMenu();
+            _sut!.MainMenuMode();
             // A
             _modelMock!.Verify(model => model.PreparingTaskList(_sut));
         }
@@ -39,7 +39,7 @@ namespace TaskList.Console.Tests
                 new ToDo(3, "Pour a whisky")
             });
             // A
-            _sut!.AtMainMenu();
+            _sut!.MainMenuMode();
             // A
             _outputMock!.Verify(output => output.WriteLine("Tasks:"));
             _outputMock!.Verify(output => output.WriteLine("1. Wash the dishes"));
@@ -51,7 +51,7 @@ namespace TaskList.Console.Tests
         public void GivenThereAreNoIncompleteTasks_WhenItRenders_ThenItRendersAnEmptyList()
         {
             // A
-            _sut!.AtMainMenu();
+            _sut!.MainMenuMode();
             // A
             _outputMock!.Verify(output => output.WriteLine("You have no tasks"));
         }
@@ -60,7 +60,7 @@ namespace TaskList.Console.Tests
         public void WhenItRenders_ThenItRendersTheCommandPrompt()
         {
             // A
-            _sut!.AtMainMenu();
+            _sut!.MainMenuMode();
             // A
             _outputMock!.Verify(output => output.Write("(A)dd a task (Q)uit (or enter a task id): "));
         }
@@ -71,7 +71,7 @@ namespace TaskList.Console.Tests
             // A
             _sut!.ErrorOccurred("The id you entered doesn't belong to an active task");
             // A
-            _sut!.AtMainMenu();
+            _sut!.MainMenuMode();
             // A
             _outputMock!.Verify(output => output.WriteLine("ERROR: The id you entered doesn't belong to an active task"));
         }
@@ -82,8 +82,8 @@ namespace TaskList.Console.Tests
             // A
             _sut!.ErrorOccurred("BOOM!");
             // A
-            _sut!.AtMainMenu();
-            _sut!.AtMainMenu();
+            _sut!.MainMenuMode();
+            _sut!.MainMenuMode();
             // A
             _outputMock!.Verify(
                 output => output.WriteLine("ERROR: BOOM!"),
@@ -95,9 +95,30 @@ namespace TaskList.Console.Tests
         public void WhenAddTaskModeIsSelected_ThenItRendersTheAddATaskPrompt()
         {
             // A
-            _sut!.AddingTask();
+            _sut!.AddingTaskMode();
             // A
             _outputMock!.Verify(output => output.WriteLine("Enter a task name (or blank to cancel): "));
+        }
+
+        [TestMethod]
+        public void WhenPreparingForEditMode_ItNotifiesTheModel()
+        {
+            // A
+            _sut!.EditingTaskMode();
+            // A
+            _modelMock!.Verify(model => model.PreparingEditMode(_sut));
+
+        }
+
+        [TestMethod]
+        public void WhenRenderingEditMode_ItShouldRenderTheEditPrompt()
+        {
+            // A
+            _sut!.TaskSelectedForEdit(new(2, "Prune the roses"));
+            // A
+            _sut!.EditingTaskMode();
+            // A
+            _outputMock!.Verify(output => output.WriteLine("Editing: 2. Prune the roses"));
         }
 
     }

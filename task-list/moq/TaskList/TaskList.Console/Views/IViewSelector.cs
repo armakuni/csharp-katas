@@ -2,7 +2,8 @@
 {
     public interface IViewSelector
     {
-        void AddingTask();
-        void AtMainMenu();
+        void AddingTaskMode();
+        void MainMenuMode();
+        void EditingTaskMode();
     }
 }

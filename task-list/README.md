@@ -85,6 +85,8 @@ sequenceDiagram
 			C->>M: Edit task (e.g. 1)
 			M->>V: Current task (e.g. 1)
 			C->>V: Editing task mode selected
+			V->>M: Preparing edit task mode
+			M->>V: Task to edit
 			V->>O: Edit task display
 			alt Change name
 				O->>C: Task name

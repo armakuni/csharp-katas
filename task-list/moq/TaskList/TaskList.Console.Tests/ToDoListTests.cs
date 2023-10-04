@@ -58,5 +58,42 @@ namespace TaskList.Console.Tests
             ));
 
         }
+
+        [TestMethod]
+        public void GivenNoTasksExist_WhenATaskIsRequestedForEdit_TheRequestIsDenied()
+        {
+            // A
+            var actual = _sut!.RequestEditingTask(69);
+            // A
+            Assert.IsFalse(actual);
+        }
+
+        [TestMethod]
+        public void GivenTheTaskExists_WhenItIsRequestedForEdit_ThenTheRequestIsAccepted()
+        {
+            // A
+            _sut!.NewTaskSpecified("Pour a whisky");
+            // A
+            var actual = _sut!.RequestEditingTask(1);
+            // A
+            Assert.IsTrue(actual);
+        }
+
+        [TestMethod]
+        public void GivenTheTaskIsSelectedForEdit_WhenTheViewIsPreparingEditMode_ThenItSendsTaskDetailsToTheView()
+        {
+            // A
+            _sut!.NewTaskSpecified("Pour a whisky");
+            _sut.RequestEditingTask(1);
+            var viewMock = new Mock<ITaskView>();
+            // A
+            _sut.PreparingEditMode(viewMock.Object);
+            // A
+            viewMock.Verify(view =>
+                view.TaskSelectedForEdit(It.Is<ToDo>(task =>
+                    task.Name == "Pour a whisky"
+                ))
+            );
+        }
     }
 }

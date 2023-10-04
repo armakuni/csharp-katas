@@ -10,6 +10,7 @@ namespace TaskList.Console.Tests
     {
         private Mock<Terminator>? _terminatorMock;
         private Mock<IViewSelector>? _viewSelectorMock;
+        private Mock<IErrorView>? _errorViewMock;
         private Mock<IModel>? _modelMock;
         private Controller.Controller? _sut;
 
@@ -18,10 +19,12 @@ namespace TaskList.Console.Tests
         {
             _terminatorMock = new Mock<Terminator>();
             _viewSelectorMock = new Mock<IViewSelector>();
+            _errorViewMock = new Mock<IErrorView>();
             _modelMock = new Mock<IModel>();
             _sut = new Controller.Controller(
                 _terminatorMock.Object, 
                 _viewSelectorMock.Object,
+                _errorViewMock.Object,
                 _modelMock.Object
             );
         }
@@ -43,7 +46,7 @@ namespace TaskList.Console.Tests
             var input = new StringReader("a");
             _sut!.HandleUserInput(input);
             // A
-            _viewSelectorMock!.Verify(view => view.AddingTask());
+            _viewSelectorMock!.Verify(view => view.AddingTaskMode());
         }
 
         [TestMethod]
@@ -56,7 +59,7 @@ namespace TaskList.Console.Tests
             var input = new StringReader(userInput.ToString());
             _sut!.HandleUserInput(input);
             // A
-            _viewSelectorMock!.Verify(view => view.AtMainMenu());
+            _viewSelectorMock!.Verify(view => view.MainMenuMode());
         }
 
         [TestMethod]
@@ -82,7 +85,55 @@ namespace TaskList.Console.Tests
             var input = new StringReader(userInput.ToString());
             _sut!.HandleUserInput(input);
             // A
-            _viewSelectorMock!.Verify(view => view.AtMainMenu());
+            _viewSelectorMock!.Verify(view => view.MainMenuMode());
+        }
+
+        [TestMethod]
+        public void GivenATaskExists_WhenTheUserChoosesToEditIt_ThenTheControllerNotifiesTheView()
+        {
+            // A
+            var input = new StringReader("1");
+            _sut!.HandleUserInput(input);
+            // A
+            _modelMock!.Verify(model => model.RequestEditingTask(1));
+        }
+
+        [TestMethod]
+        public void GivenTheTaskDoesNotExist_WhenTheUserAttemptsToEditIt_ThenTheControllerNotifiesTheView()
+        {
+            // A
+            _modelMock!
+                .Setup(model => model.RequestEditingTask(It.IsAny<int>()))
+                .Returns(false); // returning false indicates the task can not be edited
+            // A
+            var input = new StringReader("69");
+            _sut!.HandleUserInput(input);
+            // A
+            _errorViewMock!.Verify(view => view.ErrorOccurred("69 is not a valid task id for editing"));
+        }
+
+        [TestMethod]
+        public void WhenTheUserAttemptsToEditATaskUsingAnInvalidTaskId_ThenTheControllerNotifiesTheView()
+        {
+            // A
+            var input = new StringReader("fish");
+            _sut!.HandleUserInput(input);
+            // A
+            _errorViewMock!.Verify(view => view.ErrorOccurred($"fish is not a valid task id for editing"));
+        }
+
+        [TestMethod]
+        public void GivenTheTaskExists_WhenTheUserAttemptsToEditIt_ThenTheControllerNotifiesTheView()
+        {
+            // A
+            _modelMock!
+                .Setup(model => model.RequestEditingTask(It.IsAny<int>()))
+                .Returns(true); // returning true indicates that the task is selected for edit
+            // A
+            var input = new StringReader("2");
+            _sut!.HandleUserInput(input);
+            // A
+            _viewSelectorMock!.Verify(view => view.EditingTaskMode());
         }
     }
 }

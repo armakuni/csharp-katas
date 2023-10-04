@@ -4,7 +4,10 @@ namespace TaskList.Console.Model
 {
     public interface IModel
     {
-        void NewTaskSpecified(string v);
+        bool RequestEditingTask(int taskId);
+        void NewTaskSpecified(string taskName);
         void PreparingTaskList(ITaskView view);
+
+        void PreparingEditMode(ITaskView view);
     }
 }

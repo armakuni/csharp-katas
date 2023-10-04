@@ -2,12 +2,13 @@
 
 namespace TaskList.Console.Views
 {
-    public class Main : ITaskView, IViewSelector
+    public class Main : ITaskView, IViewSelector, IErrorView
     {
         private readonly IModel _model;
         private readonly TextWriter _output;
         private ToDo[] _incompleteTasks = Array.Empty<ToDo>();
         private string? _latestError;
+        private ToDo? _editingTask;
 
         public Main(IModel model, TextWriter output)
         {
@@ -15,12 +16,10 @@ namespace TaskList.Console.Views
             _output = output;
         }
 
-        public void IncompleteTasks(ToDo[] toDos)
-        {
+        public void IncompleteTasks(ToDo[] toDos) => 
             _incompleteTasks = toDos;
-        }
 
-        public void AtMainMenu()
+        public void MainMenuMode()
         {
             _model.PreparingTaskList(this);
             if (_incompleteTasks.Any())
@@ -62,8 +61,16 @@ namespace TaskList.Console.Views
         public void ErrorOccurred(string errorMessage) =>
             _latestError = errorMessage;
 
-        public void AddingTask() =>
+        public void AddingTaskMode() =>
             _output.WriteLine("Enter a task name (or blank to cancel): ");
 
+        public void TaskSelectedForEdit(ToDo? toDo) =>
+            _editingTask = toDo;
+
+        public void EditingTaskMode()
+        {
+            _model.PreparingEditMode(this);
+            _output.WriteLine($"Editing: {_editingTask?.Id}. {_editingTask?.Name}");
+        }
     }
 }
