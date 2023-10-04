@@ -23,7 +23,7 @@ namespace TaskList.Console.Controller
         public void EditATask(string? data, TextReader input)
         {
             var isParseable = int.TryParse(data, out var taskId);
-            var success = isParseable && _model.RequestEditingTask(taskId);
+            var success = isParseable && _model.EditingTask(taskId);
             if (success)
             {
                 EditATask(taskId, input);
@@ -44,14 +44,14 @@ namespace TaskList.Console.Controller
         }
 
         private void CompleteTask(int taskId) =>
-            _model.RequestTaskCompletion(taskId);
+            _model.CompletingTask(taskId);
 
         private void ChangeTaskName(int taskId, TextReader input)
         {
             _viewSelector.ChangingTaskNameMode();
             var newName = input.ReadLine()?.Trim();
             if (!string.IsNullOrWhiteSpace(newName))
-                _model.TaskNameUpdate(new(taskId, newName));
+                _model.UpdatingTaskName(new(taskId, newName));
         }
 
     }

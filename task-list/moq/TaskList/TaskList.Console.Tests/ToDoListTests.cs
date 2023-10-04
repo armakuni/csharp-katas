@@ -63,7 +63,7 @@ namespace TaskList.Console.Tests
         public void GivenNoTasksExist_WhenATaskIsRequestedForEdit_TheRequestIsDenied()
         {
             // A
-            var actual = _sut!.RequestEditingTask(69);
+            var actual = _sut!.EditingTask(69);
             // A
             Assert.IsFalse(actual);
         }
@@ -74,7 +74,7 @@ namespace TaskList.Console.Tests
             // A
             _sut!.NewTaskSpecified("Pour a whisky");
             // A
-            var actual = _sut!.RequestEditingTask(1);
+            var actual = _sut!.EditingTask(1);
             // A
             Assert.IsTrue(actual);
         }
@@ -84,7 +84,7 @@ namespace TaskList.Console.Tests
         {
             // A
             _sut!.NewTaskSpecified("Pour a whisky");
-            _sut.RequestEditingTask(1);
+            _sut.EditingTask(1);
             var viewMock = new Mock<ITaskView>();
             // A
             _sut.PreparingEditMode(viewMock.Object);
@@ -101,10 +101,10 @@ namespace TaskList.Console.Tests
         {
             // A
             _sut!.NewTaskSpecified("Pour a Irish whiskey");
-            _sut!.RequestEditingTask(1);
+            _sut!.EditingTask(1);
             var viewMock = new Mock<ITaskView>();
             // A
-            _sut!.TaskNameUpdate(new(1, "Pour a Scotch whisky"));
+            _sut!.UpdatingTaskName(new(1, "Pour a Scotch whisky"));
             // A
             _sut!.PreparingTaskList(viewMock.Object);
             viewMock.Verify(view =>

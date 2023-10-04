@@ -95,7 +95,7 @@ namespace TaskList.Console.Tests
             var input = new StringReader("1");
             _sut!.HandleUserInput(input);
             // A
-            _modelMock!.Verify(model => model.RequestEditingTask(1));
+            _modelMock!.Verify(model => model.EditingTask(1));
         }
 
         [TestMethod]
@@ -103,7 +103,7 @@ namespace TaskList.Console.Tests
         {
             // A
             _modelMock!
-                .Setup(model => model.RequestEditingTask(It.IsAny<int>()))
+                .Setup(model => model.EditingTask(It.IsAny<int>()))
                 .Returns(false); // returning false indicates the task can not be edited
             // A
             var input = new StringReader("69");
@@ -127,7 +127,7 @@ namespace TaskList.Console.Tests
         {
             // A
             _modelMock!
-                .Setup(model => model.RequestEditingTask(It.IsAny<int>()))
+                .Setup(model => model.EditingTask(It.IsAny<int>()))
                 .Returns(true); // returning true indicates that the task is selected for edit
             // A
             var input = new StringReader("2");
@@ -141,7 +141,7 @@ namespace TaskList.Console.Tests
         {
             // A
             _modelMock!
-                .Setup(model => model.RequestEditingTask(It.IsAny<int>()))
+                .Setup(model => model.EditingTask(It.IsAny<int>()))
                 .Returns(true);
             // A
             var userInput = new StringBuilder();
@@ -158,7 +158,7 @@ namespace TaskList.Console.Tests
         {
             // A
             _modelMock!
-                .Setup(model => model.RequestEditingTask(It.IsAny<int>()))
+                .Setup(model => model.EditingTask(It.IsAny<int>()))
                 .Returns(true);
             // A
             var userInput = new StringBuilder();
@@ -168,7 +168,7 @@ namespace TaskList.Console.Tests
             var input = new StringReader(userInput.ToString());
             _sut!.HandleUserInput(input);
             // A
-            _modelMock!.Verify(model => model.TaskNameUpdate(new ToDo(1, "New name for the task")));
+            _modelMock!.Verify(model => model.UpdatingTaskName(new ToDo(1, "New name for the task")));
             _viewSelectorMock!.Verify(view => view.MainMenuMode());
         }
 
@@ -177,7 +177,7 @@ namespace TaskList.Console.Tests
         {
             // A
             _modelMock!
-                .Setup(model => model.RequestEditingTask(It.IsAny<int>()))
+                .Setup(model => model.EditingTask(It.IsAny<int>()))
                 .Returns(true);
             // A
             var userInput = new StringBuilder();
@@ -188,7 +188,7 @@ namespace TaskList.Console.Tests
             _sut!.HandleUserInput(input);
             // A
             _modelMock!.Verify(
-                model => model.TaskNameUpdate(new ToDo(1, "New name for the task")),
+                model => model.UpdatingTaskName(new ToDo(1, "New name for the task")),
                 Times.Never
             );
             _viewSelectorMock!.Verify(view => view.MainMenuMode());
@@ -199,7 +199,7 @@ namespace TaskList.Console.Tests
         {
             // A
             _modelMock!
-                .Setup(model => model.RequestEditingTask(It.IsAny<int>()))
+                .Setup(model => model.EditingTask(It.IsAny<int>()))
                 .Returns(true);
             // A
             var userInput = new StringBuilder();
@@ -208,7 +208,7 @@ namespace TaskList.Console.Tests
             var input = new StringReader(userInput.ToString());
             _sut!.HandleUserInput(input);
             // A
-            _modelMock!.Verify(model => model.RequestTaskCompletion(1));
+            _modelMock!.Verify(model => model.CompletingTask(1));
             _viewSelectorMock!.Verify(view => view.MainMenuMode());
         }
 
