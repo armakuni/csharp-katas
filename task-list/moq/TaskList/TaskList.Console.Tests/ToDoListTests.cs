@@ -95,5 +95,23 @@ namespace TaskList.Console.Tests
                 ))
             );
         }
+
+        [TestMethod]
+        public void GivenTheTaskIsSelectedForEdit_WhenANewNameIsSupplied_ThenItIsUpdated()
+        {
+            // A
+            _sut!.NewTaskSpecified("Pour a Irish whiskey");
+            _sut!.RequestEditingTask(1);
+            var viewMock = new Mock<ITaskView>();
+            // A
+            _sut!.TaskNameUpdate(new(1, "Pour a Scotch whisky"));
+            // A
+            _sut!.PreparingTaskList(viewMock.Object);
+            viewMock.Verify(view =>
+                view.IncompleteTasks(It.Is<ToDo[]>(tasks =>
+                    tasks[0].Name == "Pour a Scotch whisky"
+                ))
+            );
+        }
     }
 }

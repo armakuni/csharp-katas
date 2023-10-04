@@ -7,7 +7,8 @@ namespace TaskList.Console.Model
         bool RequestEditingTask(int taskId);
         void NewTaskSpecified(string taskName);
         void PreparingTaskList(ITaskView view);
-
         void PreparingEditMode(ITaskView view);
+        void TaskNameUpdate(ToDo toDo);
+        void RequestTaskCompletion(int taskId);
     }
 }

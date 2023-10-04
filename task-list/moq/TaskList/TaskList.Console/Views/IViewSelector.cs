@@ -5,5 +5,6 @@
         void AddingTaskMode();
         void MainMenuMode();
         void EditingTaskMode();
+        void ChangingTaskNameMode();
     }
 }

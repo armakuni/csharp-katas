@@ -87,12 +87,15 @@ sequenceDiagram
 			C->>V: Editing task mode selected
 			V->>M: Preparing edit task mode
 			M->>V: Task to edit
-			V->>O: Edit task display
+			V->>O: Edit task display - (C)hange name or C(o)mplete task
 			alt Change name
+				O->>C: C
+				C->>V: Change name mode selected
+				V->>O: Change name prompt
 				O->>C: Task name
 				C->>M: Update task name
 			else Complete task
-				O->>C: Complete task
+				O->>C: O
 				C->>M: Mark task as complete
 			end
 		

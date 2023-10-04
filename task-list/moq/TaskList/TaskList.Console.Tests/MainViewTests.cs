@@ -1,4 +1,5 @@
 using Moq;
+using System.Security.Cryptography;
 using TaskList.Console.Model;
 using TaskList.Console.Views;
 
@@ -119,7 +120,18 @@ namespace TaskList.Console.Tests
             _sut!.EditingTaskMode();
             // A
             _outputMock!.Verify(output => output.WriteLine("Editing: 2. Prune the roses"));
+            _outputMock!.Verify(output => output.Write("(C)hange name or C(o)mplete task: "));
         }
 
+        [TestMethod]
+        public void WhenRenderingEditTaskNameMode_ItShouldRenderThePrompt()
+        {
+            // A
+            _sut!.TaskSelectedForEdit(new(3, "Pour a whisky"));
+            // A
+            _sut!.ChangingTaskNameMode();
+            // A
+            _outputMock!.Verify(output => output.Write("Enter new name: "));
+        }
     }
 }

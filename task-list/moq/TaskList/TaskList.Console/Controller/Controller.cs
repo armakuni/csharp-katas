@@ -26,19 +26,31 @@ namespace TaskList.Console.Controller
             else if (data == "a")
                 AddATask(input);
             else if (data != null)
-                AttemptTaskEdit(data);
+                AttemptTaskEdit(data, input);
 
         }
 
-        private void AttemptTaskEdit(string? data)
+        private void AttemptTaskEdit(string? data, TextReader input)
         {
-            var isParseable = int.TryParse(data, out var parsedTaskId);
-            var success = isParseable && _model.RequestEditingTask(int.Parse(data));
-            if (success)
-                _viewSelector.EditingTaskMode();
-            else
+            var isParseable = int.TryParse(data, out var taskId);
+            var success = isParseable && _model.RequestEditingTask(taskId);
+            if (!success)
                 _errorView.ErrorOccurred($"{data} is not a valid task id for editing");
-
+            else
+            {
+                _viewSelector.EditingTaskMode();
+                var option = input.ReadLine()?.Trim().ToLowerInvariant();
+                if(option == "c")
+                {
+                    _viewSelector.ChangingTaskNameMode();
+                    var newName = input.ReadLine()?.Trim();
+                    if (!string.IsNullOrWhiteSpace(newName))
+                        _model.TaskNameUpdate(new(taskId, newName));
+                }
+                else if (option == "o")
+                    _model.RequestTaskCompletion(taskId);
+                _viewSelector.MainMenuMode();
+            }
         }
 
         private void AddATask(TextReader input)

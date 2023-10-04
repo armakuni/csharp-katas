@@ -22,7 +22,7 @@ namespace TaskList.Console.Model
         public bool RequestEditingTask(int taskId)
         {
             var found = _incompleteTasks.Find(task => task.Id == taskId);
-            if(found != default)
+            if (found != default)
             {
                 _editingTask = found;
             }
@@ -31,7 +31,25 @@ namespace TaskList.Console.Model
 
         public void PreparingEditMode(ITaskView view)
         {
-                view.TaskSelectedForEdit(_editingTask);
+            view.TaskSelectedForEdit(_editingTask);
+        }
+
+        public void TaskNameUpdate(ToDo toDo)
+        {
+            if (_editingTask?.Id != toDo.Id)
+                throw new ArgumentOutOfRangeException(nameof(toDo));
+            var newTask = _editingTask! with { Name = toDo.Name };
+            _incompleteTasks.Remove(_editingTask);
+            _incompleteTasks.Add(newTask);
+            _editingTask = newTask;
+        }
+
+        public void RequestTaskCompletion(int taskId)
+        {
+            if (_editingTask?.Id != taskId)
+                throw new ArgumentOutOfRangeException(nameof(taskId));
+            _incompleteTasks.Remove(_editingTask);
+            _editingTask = null;
         }
     }
 }

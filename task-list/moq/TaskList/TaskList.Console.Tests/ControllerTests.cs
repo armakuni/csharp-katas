@@ -135,5 +135,82 @@ namespace TaskList.Console.Tests
             // A
             _viewSelectorMock!.Verify(view => view.EditingTaskMode());
         }
+
+        [TestMethod]
+        public void GivenTheUserChoosesToEditATask_AndTheyChooseToChangeTheName_ThenTheControllerNotifiesTheView()
+        {
+            // A
+            _modelMock!
+                .Setup(model => model.RequestEditingTask(It.IsAny<int>()))
+                .Returns(true);
+            // A
+            var userInput = new StringBuilder();
+            userInput.AppendLine("1");
+            userInput.AppendLine("C");
+            var input = new StringReader(userInput.ToString());
+            _sut!.HandleUserInput(input);
+            // A
+            _viewSelectorMock!.Verify(view => view.ChangingTaskNameMode());
+        }
+
+        [TestMethod]
+        public void GivenTheUserChoosesToEditATask_AndTheyChooseToChangeTheName_WhenTheyEnterTheName_ThenTheControllerNotifiesTheModel_AndItNotifiesTheView()
+        {
+            // A
+            _modelMock!
+                .Setup(model => model.RequestEditingTask(It.IsAny<int>()))
+                .Returns(true);
+            // A
+            var userInput = new StringBuilder();
+            userInput.AppendLine("1");
+            userInput.AppendLine("C");
+            userInput.AppendLine("New name for the task");
+            var input = new StringReader(userInput.ToString());
+            _sut!.HandleUserInput(input);
+            // A
+            _modelMock!.Verify(model => model.TaskNameUpdate(new ToDo(1, "New name for the task")));
+            _viewSelectorMock!.Verify(view => view.MainMenuMode());
+        }
+
+        [TestMethod]
+        public void GivenTheUserChoosesToEditATask_AndTheyChooseToChangeTheName_IfTheyEnterNothing_ThenTheControllerDoesNotNotifyTheModelOfAnyChanges_AndItNotifiesTheView()
+        {
+            // A
+            _modelMock!
+                .Setup(model => model.RequestEditingTask(It.IsAny<int>()))
+                .Returns(true);
+            // A
+            var userInput = new StringBuilder();
+            userInput.AppendLine("1");
+            userInput.AppendLine("C");
+            userInput.AppendLine();
+            var input = new StringReader(userInput.ToString());
+            _sut!.HandleUserInput(input);
+            // A
+            _modelMock!.Verify(
+                model => model.TaskNameUpdate(new ToDo(1, "New name for the task")),
+                Times.Never
+            );
+            _viewSelectorMock!.Verify(view => view.MainMenuMode());
+        }
+
+        [TestMethod]
+        public void GivenTheUserChoosesToEditATask_AndTheyChooseToCompleteTheTask_ThenTheControllerNotifiesTheModel_AndItNotifiesTheView()
+        {
+            // A
+            _modelMock!
+                .Setup(model => model.RequestEditingTask(It.IsAny<int>()))
+                .Returns(true);
+            // A
+            var userInput = new StringBuilder();
+            userInput.AppendLine("1");
+            userInput.AppendLine("O");
+            var input = new StringReader(userInput.ToString());
+            _sut!.HandleUserInput(input);
+            // A
+            _modelMock!.Verify(model => model.RequestTaskCompletion(1));
+            _viewSelectorMock!.Verify(view => view.MainMenuMode());
+        }
+
     }
 }

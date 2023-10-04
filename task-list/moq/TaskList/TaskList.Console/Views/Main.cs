@@ -16,20 +16,16 @@ namespace TaskList.Console.Views
             _output = output;
         }
 
-        public void IncompleteTasks(ToDo[] toDos) => 
+        public void IncompleteTasks(ToDo[] toDos) =>
             _incompleteTasks = toDos;
 
         public void MainMenuMode()
         {
             _model.PreparingTaskList(this);
             if (_incompleteTasks.Any())
-            {
                 RenderListOfTasks();
-            }
             else
-            {
                 RenderEmptyTaskList();
-            }
             RenderAnyErrors();
             RenderCommandPrompt();
         }
@@ -71,6 +67,10 @@ namespace TaskList.Console.Views
         {
             _model.PreparingEditMode(this);
             _output.WriteLine($"Editing: {_editingTask?.Id}. {_editingTask?.Name}");
+            _output.Write("(C)hange name or C(o)mplete task: ");
         }
+
+        public void ChangingTaskNameMode() =>
+            _output.Write("Enter new name: ");
     }
 }
