@@ -4,7 +4,6 @@ In this kata we practise separating input, output and modelling concerns.
 
 The goal is to produce a task list program which can be driven from the command line. There is no need to persist the task list to a database or file (though you could try that later).
 
-
 ## How this kata works
 On the `main` branch, the README specifies the kata requirements. You can also see a suggested design.
 
