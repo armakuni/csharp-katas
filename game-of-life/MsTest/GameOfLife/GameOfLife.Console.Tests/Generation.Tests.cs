@@ -12,7 +12,7 @@ namespace GameOfLife.Console.Tests
             // Act (When I do something)
             string? output = generation1.Render();
 
-            // Assert (Then certain things happen)
+            // Assert (Then certain things will have happened)
             var expected = string.Join(
                 Environment.NewLine,
                 new[] {
