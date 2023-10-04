@@ -5,7 +5,10 @@ namespace TaskList.Console.Views
     public class Main : ITaskView, IViewSelector, IErrorView
     {
         private readonly IModel _model;
-        private readonly TextWriter _output;
+        private readonly MainMenu _mainMenuView;
+        private readonly AddingTask _addingTaskView;
+        private readonly EditingTask _editingTaskView;
+        // TODO: create a view model for these
         private ToDo[] _incompleteTasks = Array.Empty<ToDo>();
         private string? _latestError;
         private ToDo? _editingTask;
@@ -13,7 +16,9 @@ namespace TaskList.Console.Views
         public Main(IModel model, TextWriter output)
         {
             _model = model;
-            _output = output;
+            _mainMenuView = new MainMenu(output);
+            _addingTaskView = new AddingTask(output);
+            _editingTaskView = new EditingTask(output);
         }
 
         public void IncompleteTasks(ToDo[] toDos) =>
@@ -22,43 +27,15 @@ namespace TaskList.Console.Views
         public void MainMenuMode()
         {
             _model.PreparingTaskList(this);
-            if (_incompleteTasks.Any())
-                RenderListOfTasks();
-            else
-                RenderEmptyTaskList();
-            RenderAnyErrors();
-            RenderCommandPrompt();
+            _mainMenuView.Render(_incompleteTasks, _latestError);
+            _latestError = null;
         }
-
-        private void RenderAnyErrors()
-        {
-            if (_latestError != null)
-            {
-                _output.WriteLine($"ERROR: {_latestError}");
-                _latestError = null;
-            }
-        }
-
-        private void RenderEmptyTaskList() =>
-            _output.WriteLine("You have no tasks");
-
-        private void RenderListOfTasks()
-        {
-            _output.WriteLine("Tasks:");
-            foreach (var task in _incompleteTasks)
-            {
-                _output.WriteLine($"{task.Id}. {task.Name}");
-            }
-        }
-
-        private void RenderCommandPrompt() =>
-            _output.Write("(A)dd a task (Q)uit (or enter a task id): ");
 
         public void ErrorOccurred(string errorMessage) =>
             _latestError = errorMessage;
 
         public void AddingTaskMode() =>
-            _output.WriteLine("Enter a task name (or blank to cancel): ");
+            _addingTaskView.Render();
 
         public void TaskSelectedForEdit(ToDo? toDo) =>
             _editingTask = toDo;
@@ -66,11 +43,10 @@ namespace TaskList.Console.Views
         public void EditingTaskMode()
         {
             _model.PreparingEditMode(this);
-            _output.WriteLine($"Editing: {_editingTask?.Id}. {_editingTask?.Name}");
-            _output.Write("(C)hange name or C(o)mplete task: ");
+            _editingTaskView.Render(_editingTask);
         }
 
         public void ChangingTaskNameMode() =>
-            _output.Write("Enter new name: ");
+            _editingTaskView.RenderForChangingTaskName();
     }
 }
