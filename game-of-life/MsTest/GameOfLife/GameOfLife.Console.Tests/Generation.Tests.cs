@@ -4,25 +4,33 @@ namespace GameOfLife.Console.Tests
     public class GenerationTests
     {
         [TestMethod]
-        public void WhenIRenderTheGeneration_ThenItRendersAnEmptyBoard()
+        public void WhenItIsAlive_CellDiesWithFewerThanTwoNeighbours()
         {
-            // Arrange (Given some starting point)
-            var generation1 = new Generation();
+            // Arrange
+            Cell cell = new()
+            {
+                IsAlive = true,
+                Neighbours = 1
+            };
+            // Act
+            cell.Calculate();
+            // Assert
+            Assert.IsFalse(cell.IsAlive, "Cell dies if it has fewer than two neighbours");
+        }
 
-            // Act (When I do something)
-            string? output = generation1.Render();
-
-            // Assert (Then certain things will have happened)
-            var expected = string.Join(
-                Environment.NewLine,
-                new[] {
-                    "........",
-                    "........",
-                    "........",
-                    "........"
-                }
-            );
-            Assert.AreEqual(expected, output);
+        [TestMethod]
+        public void WhenItIsAlive_CellSurvivesWithTwoLiveNeighbours()
+        {
+            // Arrange
+            Cell cell = new()
+            {
+                IsAlive = true,
+                Neighbours = 2
+            };
+            // Act
+            cell.Calculate();
+            // Assert
+            Assert.IsTrue(cell.IsAlive, "Cell lives if it has two neighbours");
         }
     }
 }
