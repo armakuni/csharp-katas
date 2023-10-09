@@ -13,7 +13,4 @@ public class GenericArray<T>
     {
         array[index] = item;
     }
-
-    //TODO
-    // Implement GetItem(int index) method
 }
