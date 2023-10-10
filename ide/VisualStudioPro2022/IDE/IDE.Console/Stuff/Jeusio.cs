@@ -1,6 +1,6 @@
 ﻿using IDE.SomeRandomLibrary;
 
-namespace IDE;
+namespace IDE.Console.Stuff;
 
 class Jeusio : ITidifokj
 {
