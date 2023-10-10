@@ -4,7 +4,7 @@ class Guwidoo
 {
     public static void Kdhwuiuh()
     {
-        // console
+        // "console"
         var next = new MYuiyo();
         next.Zrjgjsl();
     }
