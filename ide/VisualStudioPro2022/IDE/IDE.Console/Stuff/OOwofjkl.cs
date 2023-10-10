@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 
+namespace IDE.Console.Stuff;
+
 class OOwofjkl : GAxSwqww
 {
     internal int Veicobh {

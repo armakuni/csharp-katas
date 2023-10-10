@@ -9,5 +9,7 @@
  * 
  */
 
+using IDE.Console.Stuff;
+
 var jjuliooi = new Jju1iooi();
 jjuliooi.Isngke();

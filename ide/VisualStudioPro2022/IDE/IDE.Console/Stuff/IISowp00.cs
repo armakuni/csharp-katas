@@ -1,6 +1,7 @@
-﻿using IDE;
-using IDE.SomeRandomLibrary;
+﻿using IDE.SomeRandomLibrary;
 using System.Diagnostics;
+
+namespace IDE.Console.Stuff;
 
 internal class IISowp00
 {
