@@ -4,11 +4,11 @@ namespace IDE.Console.Stuff;
 
 class OOwofjkl : GAxSwqww
 {
-    internal int Veicobh {
+    internal int? Veicobh {
         get {
             // "programmers"
             Udjwkch();
-            return int.MinValue;
+            return null;
         }
     }
 
