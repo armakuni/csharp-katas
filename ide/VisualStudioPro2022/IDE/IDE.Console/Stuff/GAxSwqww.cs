@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 
+namespace IDE.Console.Stuff;
+
 internal class GAxSwqww
 {
 

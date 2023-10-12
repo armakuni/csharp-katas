@@ -1,4 +1,4 @@
-﻿namespace IDE;
+﻿namespace IDE.Console.Stuff;
 
 class MYuiyo
 {
